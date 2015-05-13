@@ -34,7 +34,7 @@
 using namespace std;
 using namespace json_spirit;
 
-extern Array createArgs(int nRequired, const char* address1 = NULL, const char* address2 = NULL);
+extern UniValue createArgs(int nRequired, const char* address1 = NULL, const char* address2 = NULL);
 extern Value CallRPC(string args);
 
 extern CWallet* pwalletMain;
@@ -239,7 +239,7 @@ BOOST_AUTO_TEST_CASE(rpc_wallet)
      *********************************/
     BOOST_CHECK_THROW(CallRPC("getaddressesbyaccount"), runtime_error);
     BOOST_CHECK_NO_THROW(retValue = CallRPC("getaddressesbyaccount " + strAccount));
-    Array arr = retValue.get_array();
+    UniValue arr = retValue.get_array();
     BOOST_CHECK_EQUAL(4, arr.size());
     bool notFound = true;
     for (auto a : arr) {
@@ -515,7 +515,7 @@ BOOST_AUTO_TEST_CASE(rpc_wallet_z_importexport)
 
     // Verify we can list the keys imported
     BOOST_CHECK_NO_THROW(retValue = CallRPC("z_listaddresses"));
-    Array arr = retValue.get_array();
+    UniValue arr = retValue.get_array();
     BOOST_CHECK(arr.size() == n1);
 
     // Put addresses into a set
@@ -786,7 +786,7 @@ BOOST_AUTO_TEST_CASE(rpc_z_getoperations)
     BOOST_CHECK(retValue.get_array().size() == 2);
 
     BOOST_CHECK_NO_THROW(retValue = CallRPC("z_getoperationstatus"));
-    Array array = retValue.get_array();
+    UniValue array = retValue.get_array();
     BOOST_CHECK(array.size() == 2);
 
     // idempotent
@@ -801,7 +801,7 @@ BOOST_AUTO_TEST_CASE(rpc_z_getoperations)
         Value result;
         // removes result from internal storage
         BOOST_CHECK_NO_THROW(result = CallRPC("z_getoperationresult [\"" + id.get_str() + "\"]"));
-        Array resultArray = result.get_array();
+        UniValue resultArray = result.get_array();
         BOOST_CHECK(resultArray.size() == 1);
         
         Object resultObj = resultArray.front().get_obj();
@@ -1164,7 +1164,7 @@ BOOST_AUTO_TEST_CASE(rpc_wallet_encrypted_wallet_zkeys)
 
     // Verify we can list the keys imported
     BOOST_CHECK_NO_THROW(retValue = CallRPC("z_listaddresses"));
-    Array arr = retValue.get_array();
+    UniValue arr = retValue.get_array();
     BOOST_CHECK(arr.size() == n);
 
     // Verify that the wallet encryption RPC is disabled
