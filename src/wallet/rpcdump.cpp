@@ -19,9 +19,8 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#include "json_spirit_wrapper.h"
+#include "univalue/univalue.h"
 
-using namespace json_spirit;
 using namespace std;
 
 void EnsureWalletIsUnlocked();
@@ -74,7 +73,7 @@ std::string DecodeDumpString(const std::string &str) {
     return ret.str();
 }
 
-UniValue importprivkey(const Array& params, bool fHelp)
+UniValue importprivkey(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
@@ -148,7 +147,7 @@ UniValue importprivkey(const Array& params, bool fHelp)
     return NullUniValue;
 }
 
-UniValue importaddress(const Array& params, bool fHelp)
+UniValue importaddress(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
@@ -221,7 +220,7 @@ UniValue importaddress(const Array& params, bool fHelp)
     return NullUniValue;
 }
 
-UniValue z_importwallet(const Array& params, bool fHelp)
+UniValue z_importwallet(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
@@ -244,7 +243,7 @@ UniValue z_importwallet(const Array& params, bool fHelp)
 	return importwallet_impl(params, fHelp, true);
 }
 
-UniValue importwallet(const Array& params, bool fHelp)
+UniValue importwallet(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
@@ -381,7 +380,7 @@ Value importwallet_impl(const Array& params, bool fHelp, bool fImportZKeys)
     return NullUniValue;
 }
 
-UniValue dumpprivkey(const Array& params, bool fHelp)
+UniValue dumpprivkey(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
@@ -420,7 +419,7 @@ UniValue dumpprivkey(const Array& params, bool fHelp)
 
 
 
-UniValue z_exportwallet(const Array& params, bool fHelp)
+UniValue z_exportwallet(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
@@ -441,7 +440,7 @@ UniValue z_exportwallet(const Array& params, bool fHelp)
 	return dumpwallet_impl(params, fHelp, true);
 }
 
-UniValue dumpwallet(const Array& params, bool fHelp)
+UniValue dumpwallet(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
@@ -462,7 +461,7 @@ UniValue dumpwallet(const Array& params, bool fHelp)
 	return dumpwallet_impl(params, fHelp, false);
 }
 
-UniValue dumpwallet_impl(const Array& params, bool fHelp, bool fDumpZKeys)
+UniValue dumpwallet_impl(const UniValue& params, bool fHelp, bool fDumpZKeys)
 {
     LOCK2(cs_main, pwalletMain->cs_wallet);
 
@@ -548,7 +547,7 @@ UniValue dumpwallet_impl(const Array& params, bool fHelp, bool fDumpZKeys)
 }
 
 
-UniValue z_importkey(const Array& params, bool fHelp)
+UniValue z_importkey(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
@@ -609,7 +608,7 @@ UniValue z_importkey(const Array& params, bool fHelp)
 }
 
 
-UniValue z_exportkey(const Array& params, bool fHelp)
+UniValue z_exportkey(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
