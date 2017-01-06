@@ -26,8 +26,8 @@ using namespace std;
 void EnsureWalletIsUnlocked();
 bool EnsureWalletIsAvailable(bool avoidException);
 
-Value dumpwallet_impl(const Array& params, bool fHelp, bool fDumpZKeys);
-Value importwallet_impl(const Array& params, bool fHelp, bool fImportZKeys);
+UniValue dumpwallet_impl(const UniValue& params, bool fHelp, bool fDumpZKeys);
+UniValue importwallet_impl(const UniValue& params, bool fHelp, bool fImportZKeys);
 
 
 std::string static EncodeDumpTime(int64_t nTime) {
@@ -266,7 +266,7 @@ UniValue importwallet(const UniValue& params, bool fHelp)
 	return importwallet_impl(params, fHelp, false);
 }
 
-Value importwallet_impl(const Array& params, bool fHelp, bool fImportZKeys)
+UniValue importwallet_impl(const UniValue& params, bool fHelp, bool fImportZKeys)
 {
     LOCK2(cs_main, pwalletMain->cs_wallet);
 

@@ -612,7 +612,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
 
     UniValue aCaps(UniValue::VARR); aCaps.push_back("proposal");
 
-    Value txCoinbase = NullUniValue;
+    UniValue txCoinbase = NullUniValue;
     UniValue transactions(UniValue::VARR);
     map<uint256, int64_t> setTxIndex;
     int i = 0;
@@ -674,7 +674,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     result.push_back(Pair("previousblockhash", pblock->hashPrevBlock.GetHex()));
     result.push_back(Pair("transactions", transactions));
     if (coinbasetxn) {
-        assert(txCoinbase.type() == obj_type);
+        assert(txCoinbase.isObject());
         result.push_back(Pair("coinbasetxn", txCoinbase));
     } else {
         result.push_back(Pair("coinbaseaux", aux));
@@ -834,7 +834,7 @@ UniValue estimatepriority(const UniValue& params, bool fHelp)
     return mempool.estimatePriority(nBlocks);
 }
 
-Value getblocksubsidy(const Array& params, bool fHelp)
+UniValue getblocksubsidy(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)
         throw runtime_error(
@@ -863,7 +863,7 @@ Value getblocksubsidy(const Array& params, bool fHelp)
         nFoundersReward = nReward/5;
         nReward -= nFoundersReward;
     }
-    Object result;
+    UniValue result(UniValue::VOBJ);
     result.push_back(Pair("miner", ValueFromAmount(nReward)));
     result.push_back(Pair("founders", ValueFromAmount(nFoundersReward)));
     return result;
